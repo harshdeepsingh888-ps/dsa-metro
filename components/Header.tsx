@@ -21,14 +21,16 @@ export function BrandMark() {
 
 export function Header() {
   const { p, ready, update, xpPop } = useProgress();
-  const onGuide = usePathname().startsWith('/guide');
+  const path = usePathname();
+  const section = path.startsWith('/guide') ? 'guide' : path.startsWith('/practice') ? 'practice' : 'map';
   return (
     <header className="top">
       <div className="wrap top-in">
         <Link className="brand" href="/" aria-label="DSA Metro, route map"><BrandMark /><span>DSA Metro</span></Link>
         <nav className="mainnav" aria-label="Main">
-          <Link href="/" aria-current={onGuide ? undefined : 'page'}>Map</Link>
-          <Link href="/guide/" aria-current={onGuide ? 'page' : undefined}>Study guide</Link>
+          <Link href="/" aria-current={section === 'map' ? 'page' : undefined}>Map</Link>
+          <Link href="/practice/" aria-current={section === 'practice' ? 'page' : undefined}>Practice</Link>
+          <Link href="/guide/" aria-current={section === 'guide' ? 'page' : undefined}>Study guide</Link>
         </nav>
         <div className="stats">
           {xpPop && <span key={xpPop.id} className="xp-pop go" aria-hidden="true">+{xpPop.n}</span>}

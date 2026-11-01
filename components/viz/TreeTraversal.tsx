@@ -6,14 +6,15 @@ import { Seg } from '../Seg';
 import { useStepper } from './useStepper';
 
 type Node = { v: number; x: number; y: number; l?: number; r?: number };
-const T: Node[] = [
+export const T: Node[] = [
   { v: 8, x: 210, y: 32, l: 1, r: 2 }, { v: 4, x: 110, y: 102, l: 3, r: 4 }, { v: 12, x: 310, y: 102, l: 5, r: 6 },
   { v: 2, x: 60, y: 172 }, { v: 6, x: 160, y: 172 }, { v: 10, x: 260, y: 172 }, { v: 14, x: 360, y: 172 },
 ];
-type Kind = 'pre' | 'in' | 'post' | 'level';
+export type Kind = 'pre' | 'in' | 'post' | 'level';
 type Frame = { cur: number; out: number[]; msg: string; queue?: number[]; end?: boolean };
 
-function frames(kind: Kind): Frame[] {
+/** The visit order for one traversal; frame 0 is the start, each later frame visits one node. */
+export function frames(kind: Kind): Frame[] {
   const fr: Frame[] = [{ cur: -1, out: [], msg: 'Press Step or Play.', queue: kind === 'level' ? [0] : undefined }];
   const out: number[] = [];
   const visit = (i: number, msg: string) => { out.push(i); fr.push({ cur: i, out: out.slice(), msg }); };

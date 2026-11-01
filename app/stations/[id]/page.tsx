@@ -1,11 +1,13 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import { Drill } from '@/components/practice';
 import { ProblemList } from '@/components/Problems';
 import { CodeBox, FinishBar, LineStrip, Quiz } from '@/components/StationParts';
 import { Viz } from '@/components/viz';
 import { lc } from '@/lib/guide';
 import { highlight } from '@/lib/highlight';
+import { DRILL_TITLES } from '@/lib/practice';
 import { LINES, STATIONS, stationById, stationCode } from '@/lib/stations';
 
 type Props = { params: Promise<{ id: string }> };
@@ -47,6 +49,12 @@ export default async function StationPage({ params }: Props) {
         <p className="eyebrow">Try it</p><h2>{st.vizTitle}</h2>
         <Viz kind={st.viz} stationId={st.id} />
       </section>
+      {DRILL_TITLES[st.id] && (
+        <section className="sec">
+          <p className="eyebrow">Your turn</p><h2>{DRILL_TITLES[st.id]}</h2>
+          <Drill stationId={st.id} />
+        </section>
+      )}
       <section className="sec">
         <p className="eyebrow">The code</p><h2>Write it yourself</h2>
         <p className="viz-note" style={{ marginBottom: 12 }}>Read it, close it, then type it from memory in your own editor. That is where it sticks.</p>
